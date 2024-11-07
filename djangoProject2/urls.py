@@ -16,29 +16,28 @@ Including another URLconf
 """
 
 from django.contrib import admin
+from django.shortcuts import render
 from django.urls import path
 from django.http import HttpResponse
+from djangoProject2.fake_db import user_db
 
 def index(request):
     return HttpResponse("<h1>Hello, world.</h1>")
 
-def blog_list(request):
-    book_text=''
+def user_list(request):
+    user_dict={"users":[],}
+    for idx,user_name in user_db.items():
+        user_dict["users"].append((idx,user_name['이름']))
+    return render(request, "user_list.html", user_dict)
 
-    for i in range(0, 10):
-        book_text += f'book {i}'
-    return HttpResponse(book_text)
+def user_info(request, user_id):
+    user=user_db[user_id]
+    return render(request, "user_info.html", user)
 
-def book(request, num):
-    book_text = f'book {num}번 페이지 입니다'
-    return HttpResponse(book_text)
-
-def language(request, lang):
-    return HttpResponse(f'{lang} 언어 페이지 입니다.')
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", index),
-    path("book_list/", blog_list),
-    path("book_list/<int:num>", book),
-    path("language/<str:lang>", language),
+    path("users/",user_list),
+    path("users/<int:user_id>",user_info),
+    # path("book_list/<int:num>", book),
 ]
