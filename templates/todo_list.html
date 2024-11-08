@@ -5,8 +5,8 @@
     <title>Title</title>
 </head>
 <body>
-    {% for idx,name in users %}
-        <a href="/users/{{ idx }}"><h1>{{ name }}</h1></a>
+    {% for todo in todolist %}
+        <a href="/todo/{{ todo.id }}"><h1>{{ todo.title }}</h1></a>
     {% endfor %}
 </body>
 </html>
