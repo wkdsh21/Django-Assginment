@@ -1,5 +1,5 @@
 """
-URL configuration for djangoProject2 project.
+URL configuration for config project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.1/topics/http/urls/
@@ -19,25 +19,14 @@ from django.contrib import admin
 from django.shortcuts import render
 from django.urls import path
 from django.http import HttpResponse
-from djangoProject2.fake_db import user_db
-
-def index(request):
-    return HttpResponse("<h1>Hello, world.</h1>")
-
-def user_list(request):
-    user_dict={"users":[],}
-    for idx,user_name in user_db.items():
-        user_dict["users"].append((idx,user_name['이름']))
-    return render(request, "user_list.html", user_dict)
-
-def user_info(request, user_id):
-    user=user_db[user_id]
-    return render(request, "user_info.html", user)
+from app import views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", index),
-    path("users/",user_list),
-    path("users/<int:user_id>",user_info),
+    path("", views.index),
+    path("todo/", views.todo_list),
+    path("todo/<int:todo_id>/", views.todo_info),
+    # path("users/",user_list),
+    # path("users/<int:user_id>",user_info),
     # path("book_list/<int:num>", book),
 ]
