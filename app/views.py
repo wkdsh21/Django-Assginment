@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from app.models import ToDoList
 
 
@@ -14,8 +14,8 @@ def todo_list(request):
     return render(request, "todo_list.html", context)
 
 def todo_info(request, todo_id):
-    todo=ToDoList.objects.get(pk=todo_id)
-    context={"todo":{
+    todo = get_object_or_404(ToDoList, pk=todo_id)
+    context = {"todo":{
         "title":todo.title,
         "description":todo.description,
         "start_date":todo.start_date,
