@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from app.models import ToDoList
@@ -5,14 +6,16 @@ from app.models import ToDoList
 
 # Create your views here.
 def index(request):
-    return HttpResponse("<h1>Hello, world.</h1>")
+    return render(request, 'index.html')
 
+@login_required(login_url='login')
 def todo_list(request):
     todolist=ToDoList.objects.all()
     todolist=[{"id":todo.id, "title":todo.title} for todo in todolist]
     context = {"todolist":todolist}
     return render(request, "todo_list.html", context)
 
+@login_required(login_url='login')
 def todo_info(request, todo_id):
     todo = get_object_or_404(ToDoList, pk=todo_id)
     context = {"todo":{

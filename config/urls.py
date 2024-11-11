@@ -17,16 +17,17 @@ Including another URLconf
 
 from django.contrib import admin
 from django.shortcuts import render
-from django.urls import path
+from django.urls import path, include
 from django.http import HttpResponse
 from app import views
+from member import views as model_views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", views.index),
-    path("todo/", views.todo_list),
-    path("todo/<int:todo_id>/", views.todo_info),
-    # path("users/",user_list),
-    # path("users/<int:user_id>",user_info),
-    # path("book_list/<int:num>", book),
+    path("", views.index, name="index"),
+    path("todo/", views.todo_list, name="todo_list"),
+    path("todo/<int:todo_id>/", views.todo_info, name="todo_info"),
+    path("accounts/login/", model_views.login, name="login"),
+    path("accounts/signup/", model_views.sign_up, name="signup"),
+    path("accounts/", include("django.contrib.auth.urls")),
 ]

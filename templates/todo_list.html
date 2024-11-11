@@ -5,6 +5,10 @@
     <title>Title</title>
 </head>
 <body>
+    <form action="{% url 'logout' %}" method="post">
+        {% csrf_token %}
+        <button>로그아웃</button>
+    </form>
     {% for todo in todolist %}
         <a href="/todo/{{ todo.id }}"><h1>{{ todo.title }}</h1></a>
     {% endfor %}
