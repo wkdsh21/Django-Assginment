@@ -20,14 +20,18 @@ from django.shortcuts import render
 from django.urls import path, include
 from django.http import HttpResponse
 from app import views
+from app.views import todo_delete, todo_update
 from member import views as model_views
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    path("admin/", admin.site.urls, name="admin"),
     path("", views.index, name="index"),
     path("todo/", views.todo_list, name="todo_list"),
     path("todo/<int:todo_id>/", views.todo_info, name="todo_info"),
     path("accounts/login/", model_views.login, name="login"),
     path("accounts/signup/", model_views.sign_up, name="signup"),
     path("accounts/", include("django.contrib.auth.urls")),
+    path("todo/create/", views.todo_create, name="todo_create"),
+    path("todo/<int:todo_id>/update/", views.todo_update, name="todo_update"),
+    path("todo/<int:todo_id>/delete/", views.todo_delete, name="todo_delete"),
 ]

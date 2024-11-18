@@ -1,4 +1,6 @@
+from django.contrib.auth.models import User
 from django.db import models
+
 
 # Create your models here.
 class ToDoList(models.Model):
@@ -9,10 +11,11 @@ class ToDoList(models.Model):
     is_complete = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title
 
     class Meta:
-        verbose_name="할 일"
-        verbose_name_plural="할 일 목록"
+        verbose_name = "할 일"
+        verbose_name_plural = "할 일 목록"
