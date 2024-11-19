@@ -64,12 +64,15 @@
     <div style="display: flex; justify-content: space-between">
         <h1>{{ todo.title }}</h1>
         <div>
-            <button class="button-group" onclick="location.href='{% url 'todo_update' todo.id %}'">수정하기</button>
-            <button class="button-group" id="delete-button" onclick="location.href='{% url 'todo_delete' todo.id %}'">삭제하기</button>
+            <button class="button-group" onclick="location.href='{% url 'cbv:todo_update' object.id %}'">수정하기</button>
+            <form action="{% url 'cbv:todo_delete' object.id %}" method="post"> 
+                {% csrf_token %}
+                <input type="submit" value="삭제하기" class="button-group" id="delete-button">
+            </form>
         </div>
     </div>
     <table>
-        {% for key, value in todo.items %}
+        {% for key, value in object.items %}
 		        <!-- todo.__dict__ 에서 사용하지 않을 값들은 if 조건절로 배제해줍니다. -->
             {% if key != 'title' and key != 'id' and key != 'user_id' and key != '_state'%}
                 <tr>
